@@ -31,6 +31,7 @@
     PHOTO_DATA_ENDPOINT: BASE_ENDPOINT + "/images?per_page=200",
     TERRAIN_MAP_TILE_ENDPOINT: "trailheadlabs.b9b3498e",
     SATELLITE_MAP_TILE_ENDPOINT: "trailheadlabs.jih1cig0",
+    LOCAL_MAP_TILE_ENDPOINT: "file:///data/data/com.trailheadlabs.opentrails/files/trailheadlabs.b9b3498e.{z}.{x}.{y}.png",
     TRAILSEGMENT_MAP_TILE_ENDPOINT: "trailheadlabs.ad9272f9",
     MAPBOX_ACCESS_TOKEN: "pk.eyJ1IjoidHJhaWxoZWFkbGFicyIsImEiOiJnNDFLZ1Q4In0.t7YwoIwtzS_ghFsx8gU62A",
    // TRAILSEGMENT_MAP_TILE_ENDPOINT: "http://ec2-54-67-81-150.us-west-1.compute.amazonaws.com/roads/{z}/{x}/{y}.png",
@@ -1107,6 +1108,10 @@
       return this.delegate.getCenter();
     },
 
+    getBounds: function () {
+      return this.delegate.getBounds();
+    },
+
     addLayer: function (layer) {
       this.delegate.addLayer(layer.delegate);
       return this;
@@ -1211,6 +1216,10 @@
     "satellite": {
       name: "Satellite",
       url: Configuration.SATELLITE_MAP_TILE_ENDPOINT
+    },
+    "local": {
+      name: "Local",
+      url: Configuration.LOCAL_MAP_TILE_ENDPOINT
     }
   };
 
@@ -1227,6 +1236,12 @@
     },
 
     initialize: function () {
+      if(this.get('key')==='local'){
+
+      this.delegate = L.tileLayer( this.get('url') + 'trailheadlabs.b9b3498e.{z}.{x}.{y}.png', this.get('options') );
+
+}
+else
       this.delegate = L.mapbox.tileLayer( TILE_LAYERS[this.get('key')].url, this.get('options') );
     },
 

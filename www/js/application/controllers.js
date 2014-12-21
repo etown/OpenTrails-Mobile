@@ -259,15 +259,16 @@
       //
       // MAP TILES LOGIC
       //
+      var baseLayers = [];
+      
+      baseLayers.push(new MapTileLayer({key: 'terrain'}).addTo(Map));
+      baseLayers.push(new MapTileLayer({key: 'satellite'}));
 
-      var terrainTileLayer = new MapTileLayer({key: 'terrain'}).addTo(Map);
-      var satelliteTileLayer = new MapTileLayer({key: 'satellite'});
-
-      var currentLayer = terrainTileLayer;      
+      var currentLayerIndex = 0;      
       function toggleMapTileLayer () {
-        Map.removeLayer(currentLayer);
-        currentLayer = (currentLayer === terrainTileLayer ? satelliteTileLayer : terrainTileLayer);
-        Map.addLayer(currentLayer);
+        Map.removeLayer(baseLayers[currentLayerIndex]);
+        currentLayerIndex = ++currentLayerIndex >= baseLayers.length ? 0 : currentLayerIndex;
+        Map.addLayer(baseLayers[currentLayerIndex]);
         toggleView(TRAILS_VIEW);
       }
 
@@ -651,6 +652,23 @@
 
       $scope.distance = distance;
 
+      $scope.download = function() {
+
+          fileUtils.bulkDownload(
+              tileUtils.pyramid(['trailheadlabs.b9b3498e'], 
+              Map.getBounds().getNorthEast().lat,
+              Map.getBounds().getNorthEast().lng,
+              Map.getBounds().getSouthWest().lat,
+              Map.getBounds().getSouthWest().lng,
+              {}), //tile urls
+              'tiles',
+              $("#progress_modal"),
+              function(url) { 
+                baseLayers.push(new MapTileLayer({key: 'local', url: url}));
+                alert("Download successful!"); 
+              }
+           );
+      }
       // On Load
 
       var unwatchLoaded = $scope.$watch(Models.loaded, onLoad);

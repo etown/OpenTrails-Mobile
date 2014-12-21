@@ -13,7 +13,9 @@
     <link rel="stylesheet" type="text/css" href="css/application.css"/>
     <!-- <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="css/overrides.css"/>
+    <link rel="stylesheet" href="js/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="js/lib/bootstrap/css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/overrides.css"/>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro|Lora:400,700|Merriweather+Sans:400,300,700,800' rel='stylesheet' type='text/css'>
         <style> <!-- inline style to prevent render flicker -->
@@ -27,11 +29,16 @@
 
     <div id="main">
       <div id="status"></div>
-
+      <div id="progress_modal" class="modal hide fade">
+        <div class="modal-header">
+          <h3>Downloading...</h3>
+        </div>
+        <div class="modal-body"></div>
+      </div>
       <div id="map-view">
 
         <div id="map-search">
-          <a href="#" class="control" ng-click="toggleView('search');">
+          <a href="#" class="control" ng-click="toggleMapTileLayer();">
             <i class="fa fa-search"></i>
           </a>
         </div>
@@ -297,9 +304,9 @@
           </div>
         </a>
 
-        <a href="#" ng-click="toggleMapTileLayer()">
+        <a href="#" ng-click="download()">
           <div class="button button-layer">
-            <i class="fa fa-exchange"></i>
+            <i class="fa fa-thumb-tack"></i>
           </div>
         </a>
         <span class="stretch"></span>
@@ -309,6 +316,7 @@
 
     <script type="text/javascript" src="js/lib/underscore/underscore-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/lib/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/lib/angular/angular.min.js"></script>
     <script type="text/javascript" src="js/lib/angular/angular-route.min.js"></script>
@@ -322,7 +330,9 @@
     <script type="text/javascript" src="js/lib/carousel/angular-touch.min.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/lib/papaparse.min.js"></script>
-    <script type="text/javascript" src="js/application/layer/Outerspatial.js"></script>
+    <script type="text/javascript" src="js/application/offline/tileUtils.js"></script>
+    <script type="text/javascript" src="js/application/offline/fileUtils.js"></script>
+    <script type="text/javascript" src="js/application/layer/Outerspatial.js"></script>offline
     <script type="text/javascript" src="js/application/controllers.js"></script>
     <script type="text/javascript" src="js/application/routes.js"></script>
     <script type="text/javascript" src="js/application/services.js"></script>
