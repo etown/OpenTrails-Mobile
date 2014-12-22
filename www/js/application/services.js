@@ -1216,10 +1216,6 @@
     "satellite": {
       name: "Satellite",
       url: Configuration.SATELLITE_MAP_TILE_ENDPOINT
-    },
-    "local": {
-      name: "Local",
-      url: Configuration.LOCAL_MAP_TILE_ENDPOINT
     }
   };
 
@@ -1236,18 +1232,26 @@
     },
 
     initialize: function () {
-      if(this.get('key')==='local'){
-
-      this.delegate = L.tileLayer( this.get('url') + 'trailheadlabs.b9b3498e.{z}.{x}.{y}.png', this.get('options') );
-
-}
-else
       this.delegate = L.mapbox.tileLayer( TILE_LAYERS[this.get('key')].url, this.get('options') );
     },
 
   });
 
   MapTileLayer.INDEX = TILE_LAYERS;
+
+  var LocalMapTileLayer = MapTileLayer.inherit({
+
+    defaults: {
+      url: null,
+      options: {
+          "detectRetina": true
+      }
+    },
+
+    initialize: function () {
+      this.delegate = L.tileLayer( this.get('url') + Configuration.TERRAIN_MAP_TILE_ENDPOINT + '.{z}.{x}.{y}.png', this.get('options') );
+    }
+  });
 
   var VectorLayer = MapLayer.inherit({
 
@@ -1560,6 +1564,12 @@ else
   module.factory('MapTileLayer', [
     function () {
       return MapTileLayer;
+    }
+  ]);
+
+  module.factory('LocalMapTileLayer', [
+    function () {
+      return LocalMapTileLayer;
     }
   ]);
 

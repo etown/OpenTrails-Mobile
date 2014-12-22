@@ -111,8 +111,9 @@
     'MapMarkerClusterGroup',
     'TrailSearch',
     'VectorLayer',
+    'LocalMapTileLayer',
 
-    function ($scope, Map, Models, GeoPosition, GeoPositionMarker, MapTileLayer, MapTrailLayer, MapTrailHeadMarker, MapMarkerClusterGroup, TrailSearch, VectorLayer) {
+    function ($scope, Map, Models, GeoPosition, GeoPositionMarker, MapTileLayer, MapTrailLayer, MapTrailHeadMarker, MapMarkerClusterGroup, TrailSearch, VectorLayer, LocalMapTileLayer) {
 
       //
       // "CONSTANTS"
@@ -660,12 +661,12 @@
               Map.getBounds().getNorthEast().lng,
               Map.getBounds().getSouthWest().lat,
               Map.getBounds().getSouthWest().lng,
+              Map.getZoom(),
               {}), //tile urls
               'tiles',
               $("#progress_modal"),
               function(url) { 
-                baseLayers.push(new MapTileLayer({key: 'local', url: url}));
-                alert("Download successful!"); 
+                baseLayers.push(new LocalMapTileLayer({url: url}));
               }
            );
       }
